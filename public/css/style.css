@@ -2,6 +2,9 @@
 .header {
     border-bottom: 1px solid #eee;
     padding: 10px 0;
+    margin-bottom: 10px;
+    width: 100vw;
+    z-index: 999;
 }
 
 .header .inner-logo img {

@@ -1,0 +1,26 @@
+extends ../../layouts/default.pug
+
+block main 
+    if (record.title)
+        h1(class="mb-4") #{record.title}
+
+    if (record.status)
+        div(class="mb-4")
+            span Trạng thái: 
+                if (record.status === "active")
+                    span(class="badge badge-active") Hoạt động
+                else    
+                    span(class="badge badge-danger") Không hoạt động
+    
+    if (record.position)
+        div(class="mb-4") Vị trí: <b>#{record.position}</b>
+    
+    if (record.description)
+        div(class="mb-4") !{record.description}
+
+    a(
+        href=`${prefixAdmin}/blogs-category/edit/${record.id}`
+        class="btn btn-warning"
+    ) Chỉnh sửa 
+
+    script(src="/admin/js/product.js") 

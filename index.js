@@ -14,6 +14,10 @@ database.connect();
 const methodOverride = require("method-override");
 app.use(methodOverride("_method"));
 
+// Library to handle Date-Time
+const moment = require("moment");
+app.locals.moment = moment;
+
 // Connect to parse the body when data is sent onto server by using body-parser library
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: false} ));
@@ -38,8 +42,11 @@ app.set('views', `${__dirname}/views`);
 app.set('view engine', 'pug');
 
 // Configuration public file
-
 app.use(express.static(`${__dirname}/public`));
+
+// TinyMCE library for text editing
+const path = require('path');
+app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
 
 // App locals variables
 const systemConfig = require("./config/system");

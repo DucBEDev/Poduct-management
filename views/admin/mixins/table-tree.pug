@@ -1,0 +1,79 @@
+include ./moment.pug
+
+mixin table-tree(items, arr, pathName, level = 1)
+    each item, index in items 
+        - const prefix = Array(level + 1).join("-- ")
+        tr
+            td 
+                input(type="checkbox" name="id" value=item.id)
+            if (item.index) 
+                td #{item.index}
+            if (item.thumbnail)
+                td  
+                    img(
+                        src=`${item.thumbnail}`
+                        alt=`${item.title}`
+                        width="100px"
+                        height="auto"
+                )
+            if (item.title)
+                td #{prefix}#{item.title}
+            if (item.position)
+                td  
+                    input(
+                        type="number",
+                        value=item.position,
+                        style="width: 60px",
+                        min="1",
+                        name="position"
+                    )
+            if (item.status)
+                td 
+                    if (arr.includes("edit"))
+                        if (item.status == "active")
+                            a(
+                                href="javascript:;" 
+                                button-change-status
+                                data-status=item.status
+                                data-id=item.id
+                                class="badge badge-success"
+                            ) Hoạt động
+                        else 
+                            a(
+                                href="javascript:;" 
+                                button-change-status
+                                data-status=item.status
+                                data-id=item.id
+                                class="badge badge-danger"
+                            ) Không hoạt động
+                    else 
+                        if (item.status == "active")
+                            span(class="badge badge-success") Hoạt động
+                        else 
+                            span(class="badge badge-danger") Không hoạt động
+            td 
+                p #{item.createdUserFullName}
+                p 
+                    +formatDate(item.createdBy.createdAt)
+            td 
+                p #{item.updatedUserFullName}
+                p 
+                    +formatDate(item.updatedAt)
+            td
+                a(
+                    href=`${prefixAdmin}/${pathName}/detail/${item.id}`
+                    class="btn btn-secondary btn-sm"
+                ) Chi tiết 
+                if (arr.includes("edit"))
+                    a(
+                        href=`${prefixAdmin}/${pathName}/edit/${item.id}`
+                        class="btn btn-warning btn-sm"
+                    ) Sửa
+                if (arr.includes("delete"))
+                    button(
+                        class="btn btn-danger btn-sm"
+                        button-delete
+                        data-id=item.id
+                    ) Xóa
+        if item.children && item.children.length > 0
+            +table-tree(item.children, arr, pathName, level + 1)

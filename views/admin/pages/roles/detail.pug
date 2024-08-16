@@ -1,0 +1,13 @@
+extends ../../layouts/default.pug
+
+block main 
+    if (records.title)
+        div(class="mb-4") <b>Tiêu đề</b>: #{records.title}
+
+    if (records.description)
+        div(class="mb-4") <b>Mô tả</b>: #{records.description}
+    
+    a(
+        href=`${prefixAdmin}/roles/edit/${records.id}`
+        class="btn btn-warning"
+    ) Chỉnh sửa

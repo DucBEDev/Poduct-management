@@ -1,0 +1,74 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+
+block main 
+    h1(class="mb-4") Cập nhật thông tin tài khoản 
+
+    +alert-success(5000)
+    +alert-error(5000)
+
+    form(
+        action=`${prefixAdmin}/my-account/edit?_method=PATCH`
+        method="POST"
+        enctype="multipart/form-data"
+    )
+        div(class="form-group")
+            label(for="fullName") Họ tên *
+            input(
+                type="text"
+                id="fullName"
+                name="fullName"
+                class="form-control"
+                required
+                value=user.fullName
+            )
+        div(class="form-group")
+            label(for="email") Email *
+            input(
+                type="email"
+                id="email"
+                name="email"
+                class="form-control"
+                required
+                value=user.email
+            )
+        div(class="form-group")
+            label(for="password") Mật khẩu *
+            input(
+                type="password"
+                id="password"
+                name="password"
+                class="form-control"
+            )
+        div(class="form-group")
+            label(for="phone") Số điện thoại *
+            input(
+                type="text"
+                id="phone"
+                name="phone"
+                class="form-control"
+                value=user.phone
+            )
+        div(
+            class="form-group"
+            upload-image
+        )
+            label(for="avatar") Avatar 
+            input(
+                type="file"
+                id="avatar"
+                name="avatar"
+                accept="image/*"
+                class="form-control-file"
+                upload-image-input
+            )
+            img(
+                src=user.avatar 
+                class="image-preview"
+                upload-image-preview
+            )
+        div(class="form-group")
+            button(
+                type="submit"
+                class="btn btn-primary"
+            ) Cập nhật

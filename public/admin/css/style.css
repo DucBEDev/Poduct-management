@@ -1,10 +1,11 @@
 /* Header */
-.header {
+body .header {
     background: #202020;
     padding: 10px 0;
-    position: sticky;
+    position: fixed;
     top: 0;
     z-index: 9999;
+    width: 100%;
 }
 
 .header .inner-logo a {
@@ -30,6 +31,7 @@
     position: relative;
     left: 150px;
     width: calc(100% - 180px);
+    margin-top: 80px;
 }
 /* End Body */
 

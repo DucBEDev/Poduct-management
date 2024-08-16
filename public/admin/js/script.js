@@ -99,7 +99,6 @@ const formChangeMulti = document.querySelector("[form-change-multi]");
 if (formChangeMulti) {
     formChangeMulti.addEventListener("submit", (e) => {
         e.preventDefault();
-
         const checkboxMulti = document.querySelector("[checkbox-multi]");
         const inputsChecked = checkboxMulti.querySelectorAll("input[name='id']:checked");
         const typeChange = e.target.elements.type.value;
@@ -115,9 +114,8 @@ if (formChangeMulti) {
             inputsChecked.forEach(input => {
                 const id = input.value;
                 if (typeChange == "change-position") {
-                    const position = input
-                                        .closest("tr")
-                                        .querySelector("input[name='position']").value;
+                    const position = input.closest("tr")
+                                          .querySelector("input[name='position']").value;
                     ids.push(`${id}-${position}`);
                 }
                 else {
@@ -164,3 +162,42 @@ if (uploadImage) {
     });
 }
 // End Upload Image
+
+// Sort
+const sort = document.querySelector("[sort]");
+
+if (sort) {
+    const sortSelect = sort.querySelector("[sort-select]");
+    const sortClear = sort.querySelector("[sort-clear]");
+    let url = new URL(window.location.href);
+
+    sortSelect.addEventListener("change", (e) => {
+        const value = e.target.value;
+        const [sortKey, sortValue] = value.split("-");
+
+        url.searchParams.set("sortKey", sortKey);
+        url.searchParams.set("sortValue", sortValue);
+
+        window.location.href = url;
+
+    });
+
+    sortClear.addEventListener("click", () => {
+        url.searchParams.delete("sortKey");
+        url.searchParams.delete("sortValue");
+
+        window.location.href = url;
+    });
+
+    // Add attribute selected for sort 
+    const sortKey = url.searchParams.get("sortKey");
+    const sortValue = url.searchParams.get("sortValue");
+
+    if (sortKey && sortValue) {
+        const stringSort = `${sortKey}-${sortValue}`;
+        const optionSelected = sortSelect.querySelector(`option[value='${stringSort}']`);
+        
+        optionSelected.selected = true;
+    }
+}
+// End Sort

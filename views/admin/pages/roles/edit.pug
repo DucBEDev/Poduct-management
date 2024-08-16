@@ -1,0 +1,43 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+
+block main 
+    if(role.permissions.includes("roles_edit"))
+        //- +alert-error(3000)
+        //- +alert-success(3000)
+
+        h1(class="mb-4") Chỉnh sửa nhóm quyền 
+
+        form(
+            action=`${prefixAdmin}/roles/edit/${records.id}?_method=PATCH`
+            id="form-edit-role"
+            method="POST"
+        )
+            div(class="form-group")
+                label(for="title") Tiêu đề
+                input(
+                    type="text"
+                    class="form-control"
+                    id="title"
+                    name="title"
+                    value=records.title
+                    required
+                )
+            div(class="form-group")
+                label(for="desc") Mô tả
+                input(
+                    type="text"
+                    class="form-control"
+                    id="desc"
+                    value=records.description
+                    name="description"
+                )
+            div(Class="form-group")
+                button(
+                    type="submit"
+                    class="btn btn-primary"
+                ) Cập nhật
+
+        script(src="/admin/js/product.js")
+
+        

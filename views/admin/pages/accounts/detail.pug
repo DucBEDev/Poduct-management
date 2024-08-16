@@ -1,0 +1,39 @@
+extends ../../layouts/default.pug
+
+block main 
+    if (data.fullName)
+        h1(class="mb-4") #{data.fullName}
+
+    if (data.email)
+        div(class="mb-4") Email: <b>#{data.email}</b>
+    
+    if (data.phone)
+        div(class="mb-4") Số điện thoại: <b>#{data.phone}</b>
+    
+    if (data.role_id)
+        each item in roles  
+            if (item.id == data.role_id)
+                div(class="mb-4") Phân quyền: <b>#{item.title}</b>
+            
+    
+    if (data.avatar)
+        div(class="mb-4")
+            img(
+                src=data.avatar 
+                style="width: 100px"
+            )
+
+    if (data.status)
+        div(class="mb-4")
+            span Trạng thái: 
+                if (data.status == "active")
+                    span(class="badge badge-success") Hoạt động
+                else    
+                    span(class="badge badge-danger") Không hoạt động
+    
+    a(
+        href=`${prefixAdmin}/accounts/edit/${data.id}`
+        class="btn btn-warning"
+    ) Chỉnh sửa 
+
+    script(src="/admin/js/product.js") 
